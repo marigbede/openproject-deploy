@@ -1,0 +1,2 @@
+git clone https://github.com/marigbede/openproject-deploy.git --depth=1 --branch=apin/stable-14 openproject_deploy
+git clone https://github.com/marigbede/openproject.git --depth=1 --branch=apin/stable-14 openproject_source
