@@ -1,3 +1,4 @@
+# for cloud pg add unaccent, btree_gist
 networks:
   frontend:
   backend:
@@ -25,6 +26,7 @@ x-op-app: &app
     # set to true to enable the email receiving feature. See ./docker/cron for more options
     IMAP_ENABLED: "${IMAP_ENABLED:-false}"
 
+services:
   cache:
     image: memcached
     <<: *restart_policy
