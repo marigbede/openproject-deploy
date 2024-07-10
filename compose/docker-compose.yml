@@ -3,20 +3,19 @@ networks:
   backend:
 
 volumes:
-  pgdata:
   opdata:
   assets:
 
 x-op-restart-policy: &restart_policy
   restart: unless-stopped
 x-op-image: &image
-  image: openproject/openproject:${TAG:-14-slim}
+  image: openproject:latest
 x-op-app: &app
   <<: [*image, *restart_policy]
   environment:
     OPENPROJECT_HTTPS: "${OPENPROJECT_HTTPS:-true}"
-    OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST__NAME:-localhost:8080}"
-    OPENPROJECT_HSTS: "${OPENPROJECT_HSTS:-true}"
+    OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST__NAME:-apinprojects.cloudportal.ng}"
+    OPENPROJECT_HSTS: "${OPENPROJECT_HSTS:-false}"
     RAILS_CACHE_STORE: "memcache"
     OPENPROJECT_CACHE__MEMCACHE__SERVER: "cache:11211"
     OPENPROJECT_RAILS__RELATIVE__URL__ROOT: "${OPENPROJECT_RAILS__RELATIVE__URL__ROOT:-}"
@@ -25,19 +24,6 @@ x-op-app: &app
     RAILS_MAX_THREADS: ${RAILS_MAX_THREADS:-16}
     # set to true to enable the email receiving feature. See ./docker/cron for more options
     IMAP_ENABLED: "${IMAP_ENABLED:-false}"
-
-services:
-  db:
-    image: postgres:13
-    <<: *restart_policy
-    stop_grace_period: "3s"
-    volumes:
-      - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-p4ssw0rd}
-      POSTGRES_DB: openproject
-    networks:
-      - backend
 
   cache:
     image: memcached
@@ -69,7 +55,6 @@ services:
       - frontend
       - backend
     depends_on:
-      - db
       - cache
       - seeder
     labels:
@@ -99,7 +84,6 @@ services:
     networks:
       - backend
     depends_on:
-      - db
       - cache
       - seeder
     volumes:
@@ -111,7 +95,6 @@ services:
     networks:
       - backend
     depends_on:
-      - db
       - cache
       - seeder
     volumes:
