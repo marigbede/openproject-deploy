@@ -25,6 +25,10 @@ x-op-app: &app
     RAILS_MAX_THREADS: ${RAILS_MAX_THREADS:-16}
     # set to true to enable the email receiving feature. See ./docker/cron for more options
     IMAP_ENABLED: "${IMAP_ENABLED:-false}"
+    # additional variables & configurations
+    OPENPROJECT_APP__TITLE: "APIN Projects"
+    OPENPROJECT_EE__MANAGER__VISIBLE: false
+    OPENPROJECT_SOFTWARE__URL: "https://apinprojects.cloudportal.ng"
 
 services:
   cache:
