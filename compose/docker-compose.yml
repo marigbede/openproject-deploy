@@ -28,6 +28,7 @@ x-op-app: &app
     # additional variables & configurations
     OPENPROJECT_APP__TITLE: "APIN Projects"
     OPENPROJECT_EE__MANAGER__VISIBLE: false
+    OPENPROJECT_SHOW__COMMUNITY__LINKS: false
     OPENPROJECT_SOFTWARE__URL: "https://apinprojects.cloudportal.ng"
 
 services:
